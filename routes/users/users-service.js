@@ -3,6 +3,7 @@ const { User } = require("../../models/schemes");
 async function signUpUser(newUser) {
   try {
     const user = await User.create(newUser);
+    return user;
   } catch (error) {
     throw error;
   }

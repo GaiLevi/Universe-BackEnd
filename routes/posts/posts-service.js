@@ -4,6 +4,8 @@ async function createPost(post) {
   try {
     return await Post.create({
       text: post.text,
+      timeStamp: new Date(),
+      user: post.user,
     });
   } catch (error) {
     throw error;

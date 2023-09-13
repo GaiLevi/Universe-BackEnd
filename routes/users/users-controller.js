@@ -2,8 +2,9 @@ const userService = require("./users-service");
 
 async function signUpUser(req, res) {
   try {
-    await userService.signUpUser(req.body);
-    res.send("User Signed up");
+    const user = await userService.signUpUser(req.body);
+    console.log(user);
+    res.send(user);
   } catch (error) {
     res.send(error);
   }
