@@ -3,10 +3,9 @@ const userService = require("./users-service");
 async function signUpUser(req, res) {
   try {
     const user = await userService.signUpUser(req.body);
-    console.log(user);
     res.send(user);
   } catch (error) {
-    res.send(error);
+    res.status(error.status).send(error);
   }
 }
 async function deleteUser(req, res) {
@@ -14,7 +13,7 @@ async function deleteUser(req, res) {
     await userService.deleteUser(req.params.id);
     res.send("User deleted.");
   } catch (error) {
-    res.send(error);
+    res.status(error.status).send(error);
   }
 }
 async function updateUser(req, res) {
@@ -22,7 +21,7 @@ async function updateUser(req, res) {
     await userService.updateUser(req.body);
     res.send("User updated");
   } catch (error) {
-    res.send(error);
+    res.status(error.status).send(error);
   }
 }
 async function getUser(req, res) {
@@ -30,7 +29,7 @@ async function getUser(req, res) {
     const user = await userService.getUser(req.params.id);
     res.send(user);
   } catch (error) {
-    res.send(error);
+    res.status(error.status).send(error);
   }
 }
 async function getUsers(req, res) {
@@ -38,7 +37,7 @@ async function getUsers(req, res) {
     const users = await userService.getUsers();
     res.send(users);
   } catch (error) {
-    res.send(error);
+    res.status(error.status).send(error);
   }
 }
 

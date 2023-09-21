@@ -1,7 +1,20 @@
+const createHttpError = require("http-errors");
 const { User } = require("../../models/schemes");
+
+async function getUserByEmail(email) {
+  try {
+    return await User.findOne({ email: email });
+  } catch (error) {
+    throw error;
+  }
+}
 
 async function signUpUser(newUser) {
   try {
+    const isUserExist = await getUserByEmail(newUser.email);
+    if (isUserExist) {
+      throw createHttpError.Unauthorized("Email already exist.");
+    }
     const user = await User.create(newUser);
     return user;
   } catch (error) {
