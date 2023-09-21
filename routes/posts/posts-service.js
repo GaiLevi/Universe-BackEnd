@@ -44,4 +44,41 @@ async function editPost(post) {
   }
 }
 
-module.exports = { createPost, getPosts, deletePost, getPost, editPost };
+async function getUserPosts(userId) {
+  try {
+    const userPosts = await Post.find({ "user.id": userId });
+    return userPosts;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function toggleLike(userId, postId) {
+  try {
+    // await Post.updateOne({like})
+    const post = await getPost(postId);
+    let likes = post.likes;
+    const userLiked = post.likes.includes(userId);
+    if (userLiked) {
+      // If user has liked the post, remove the userId from likes array
+      await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
+      console.log("User unliked the post.");
+    } else {
+      // If user hasn't liked the post, add the userId to likes array
+      await Post.updateOne({ _id: postId }, { $push: { likes: userId } });
+      console.log("User liked the post.");
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+
+module.exports = {
+  createPost,
+  getPosts,
+  deletePost,
+  getPost,
+  editPost,
+  getUserPosts,
+  toggleLike,
+};

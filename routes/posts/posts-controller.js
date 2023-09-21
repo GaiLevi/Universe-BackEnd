@@ -7,7 +7,7 @@ async function createPost(req, res) {
     const newPost = await postService.createPost(post);
     res.send(newPost);
   } catch (error) {
-    res.send(error);
+    res.status(error.status).send(error);
   }
 }
 
@@ -16,7 +16,7 @@ async function getPosts(req, res) {
     const posts = await postService.getPosts();
     res.send(posts);
   } catch (error) {
-    res.send(error);
+    res.status(error.status).send(error);
   }
 }
 
@@ -26,7 +26,7 @@ async function deletePost(req, res) {
     await postService.deletePost(postId);
     res.send(`Post with id of: ${postId} deleted!`);
   } catch (error) {
-    res.send(error);
+    res.status(error.status).send(error);
   }
 }
 
@@ -36,7 +36,7 @@ async function enterPost(req, res) {
     const post = await postService.getPost(postId);
     res.send(post);
   } catch (error) {
-    res.send(error);
+    res.status(error.status).send(error);
   }
 }
 
@@ -46,8 +46,37 @@ async function editPost(req, res) {
     const updatedPost = await postService.editPost(post);
     res.send("post updated");
   } catch (error) {
-    res.send(error);
+    res.status(error.status).send(error);
   }
 }
 
-module.exports = { createPost, getPosts, deletePost, enterPost, editPost };
+async function getUserPosts(req, res) {
+  try {
+    const userId = req.params.id;
+    const userPosts = await postService.getUserPosts(userId);
+    res.send(userPosts);
+  } catch (error) {
+    res.status(error.status).send(error);
+  }
+}
+
+async function toggleLike(req, res) {
+  try {
+    const userId = req.params.userId;
+    const postId = req.params.postId;
+    await postService.toggleLike(userId, postId);
+    res.send("likeToggle");
+  } catch (error) {
+    res.status(error.status).send(error);
+  }
+}
+
+module.exports = {
+  createPost,
+  getPosts,
+  deletePost,
+  enterPost,
+  editPost,
+  getUserPosts,
+  toggleLike,
+};
