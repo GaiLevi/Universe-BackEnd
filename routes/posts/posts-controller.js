@@ -71,6 +71,18 @@ async function toggleLike(req, res) {
   }
 }
 
+async function addComment(req,res){
+  try {
+    const { text, user } = req.body;
+    const postId = req.params.postId;
+    const comment = {postId,text,user};
+    const newComment = await postService.addComment(comment);
+    res.send(newComment);
+  } catch (error) {
+    res.status(error.status).send(error);
+  }
+}
+
 module.exports = {
   createPost,
   getPosts,
@@ -79,4 +91,5 @@ module.exports = {
   editPost,
   getUserPosts,
   toggleLike,
+  addComment,
 };

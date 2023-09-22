@@ -73,6 +73,20 @@ async function toggleLike(userId, postId) {
   }
 }
 
+async function addComment(comment){
+  try {
+    const post = await getPost(comment.postId);
+    const newComment = {
+      user: comment.user,
+      text: comment.text,
+    }
+    post.comments.push(newComment);
+    return await editPost(post);
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   createPost,
   getPosts,
@@ -81,4 +95,5 @@ module.exports = {
   editPost,
   getUserPosts,
   toggleLike,
+  addComment,
 };
