@@ -13,6 +13,7 @@ const postSchema = new mongoose.Schema({
         userName: String,
         profileImage: String,
       },
+      timeStamp: Date,
       text: String,
     },
   ],

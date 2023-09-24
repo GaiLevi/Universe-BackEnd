@@ -10,6 +10,7 @@ const {
   getUserPosts,
   toggleLike,
   addComment,
+  deleteComment,
 } = require("./posts-controller.js");
 
 router.post("/", createPost);
@@ -19,6 +20,7 @@ router.get("/:id", enterPost);
 router.get("/posts/:id", getUserPosts);
 router.put("/", editPost);
 router.post("/like/:userId/:postId", toggleLike);
-router.post(`/comment/:postId`,addComment)
+router.post(`/comment/:postId`, addComment);
+router.delete(`/comment/:postId/:commentId`, deleteComment);
 
 module.exports = router;

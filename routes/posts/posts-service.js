@@ -73,15 +73,35 @@ async function toggleLike(userId, postId) {
   }
 }
 
-async function addComment(comment){
+async function addComment(comment) {
   try {
     const post = await getPost(comment.postId);
     const newComment = {
       user: comment.user,
       text: comment.text,
-    }
+      timeStamp: new Date(),
+    };
+    console.log(newComment);
     post.comments.push(newComment);
     return await editPost(post);
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function deleteComment(comment) {
+  try {
+    const updatedPost = await Post.findByIdAndUpdate(
+      comment.postId,
+      { $pull: { comments: { _id: comment.commentId } } },
+      { new: true }
+    );
+    console.log(updatedPost);
+    if (!updatedPost) {
+      throw new Error("Post not found");
+    }
+
+    return updatedPost;
   } catch (error) {
     throw error;
   }
@@ -96,4 +116,5 @@ module.exports = {
   getUserPosts,
   toggleLike,
   addComment,
+  deleteComment,
 };
