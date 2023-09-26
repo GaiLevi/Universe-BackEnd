@@ -107,6 +107,42 @@ async function deleteComment(comment) {
   }
 }
 
+async function toggleCommentLike(userId, postId, commentId) {
+  try {
+    // Get the post by postId
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      throw new Error("Post not found");
+    }
+
+    // Find the comment within the comments array
+    const comment = post.comments.find((c) => c._id.toString() === commentId);
+
+    if (!comment) {
+      throw new Error("Comment not found");
+    }
+
+    // Check if the user's ID is in the comment's likes array
+    const likedIndex = comment.likes.indexOf(userId);
+
+    if (likedIndex === -1) {
+      // User has not liked the comment, add the user's ID to the likes array
+      comment.likes.push(userId);
+    } else {
+      // User has already liked the comment, remove the user's ID from the likes array
+      comment.likes.splice(likedIndex, 1);
+    }
+
+    // Save the updated post with the modified comment
+    const updatedPost = await post.save();
+
+    return updatedPost;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   createPost,
   getPosts,
@@ -117,4 +153,5 @@ module.exports = {
   toggleLike,
   addComment,
   deleteComment,
+  toggleCommentLike,
 };

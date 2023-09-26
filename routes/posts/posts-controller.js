@@ -95,6 +95,16 @@ async function deleteComment(req, res) {
   }
 }
 
+async function toggleCommentLike(req, res) {
+  try {
+    const { userId, postId, commentId } = req.params;
+    await postService.toggleCommentLike(userId, postId, commentId);
+    res.send("The comment's like toggled.");
+  } catch (error) {
+    res.status(error.status).send(error);
+  }
+}
+
 module.exports = {
   createPost,
   getPosts,
@@ -105,4 +115,5 @@ module.exports = {
   toggleLike,
   addComment,
   deleteComment,
+  toggleCommentLike,
 };

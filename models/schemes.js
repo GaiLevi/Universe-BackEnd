@@ -15,6 +15,7 @@ const postSchema = new mongoose.Schema({
       },
       timeStamp: Date,
       text: String,
+      likes: [String],
     },
   ],
   user: {
