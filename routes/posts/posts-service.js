@@ -81,7 +81,6 @@ async function addComment(comment) {
       text: comment.text,
       timeStamp: new Date(),
     };
-    console.log(newComment);
     post.comments.push(newComment);
     return await editPost(post);
   } catch (error) {
@@ -96,7 +95,6 @@ async function deleteComment(comment) {
       { $pull: { comments: { _id: comment.commentId } } },
       { new: true }
     );
-    console.log(updatedPost);
     if (!updatedPost) {
       throw new Error("Post not found");
     }
