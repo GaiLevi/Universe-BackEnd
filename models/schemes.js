@@ -6,6 +6,18 @@ const postSchema = new mongoose.Schema({
   text: String,
   timeStamp: Date,
   likes: [String],
+  comments: [
+    {
+      user: {
+        id: String,
+        userName: String,
+        profileImage: String,
+      },
+      timeStamp: Date,
+      text: String,
+      likes: [String],
+    },
+  ],
   user: {
     id: String,
     userName: String,

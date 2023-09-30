@@ -71,6 +71,40 @@ async function toggleLike(req, res) {
   }
 }
 
+async function addComment(req, res) {
+  try {
+    const { text, user } = req.body;
+    const postId = req.params.postId;
+    const comment = { postId, text, user };
+    const newComment = await postService.addComment(comment);
+    res.send(newComment);
+  } catch (error) {
+    res.status(error.status).send(error);
+  }
+}
+
+async function deleteComment(req, res) {
+  try {
+    const commentId = req.params.commentId;
+    const postId = req.params.postId;
+    const comment = { postId, commentId };
+    await postService.deleteComment(comment);
+    res.send("The comment was deleted.");
+  } catch (error) {
+    res.status(error.status).send(error);
+  }
+}
+
+async function toggleCommentLike(req, res) {
+  try {
+    const { userId, postId, commentId } = req.params;
+    await postService.toggleCommentLike(userId, postId, commentId);
+    res.send("The comment's like toggled.");
+  } catch (error) {
+    res.status(error.status).send(error);
+  }
+}
+
 module.exports = {
   createPost,
   getPosts,
@@ -79,4 +113,7 @@ module.exports = {
   editPost,
   getUserPosts,
   toggleLike,
+  addComment,
+  deleteComment,
+  toggleCommentLike,
 };
