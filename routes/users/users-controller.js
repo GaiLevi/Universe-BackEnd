@@ -1,3 +1,4 @@
+const createHttpError = require("http-errors");
 const userService = require("./users-service");
 
 async function signUpUser(req, res) {
@@ -41,4 +42,36 @@ async function getUsers(req, res) {
   }
 }
 
-module.exports = { signUpUser, getUser, getUsers, deleteUser, updateUser };
+async function toggleFollow(req, res) {
+  try {
+    const { userId, followId } = req.params;
+    if (userId === followId) {
+      throw createHttpError.Unauthorized("Cannot follow yourself.");
+    }
+    await userService.toggleFollow(userId, followId);
+    res.send(`follow added to ${followId}`);
+  } catch (error) {
+    res.status(error.status).send(error);
+  }
+}
+
+async function getUsersByName(req, res) {
+  try {
+    const { userName } = req.params;
+
+    const users = await userService.getUsersByName(userName);
+    res.send(users);
+  } catch (error) {
+    res.status(error.status).send(error);
+  }
+}
+
+module.exports = {
+  signUpUser,
+  getUser,
+  getUsers,
+  deleteUser,
+  updateUser,
+  toggleFollow,
+  getUsersByName,
+};

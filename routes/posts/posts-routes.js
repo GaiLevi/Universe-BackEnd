@@ -15,9 +15,9 @@ const {
 } = require("./posts-controller.js");
 
 router.post("/", createPost);
-router.get("/", getPosts);
+router.get("/:userId", getPosts);
 router.delete("/:id", deletePost);
-router.get("/:id", enterPost);
+router.get("/enter/:id", enterPost);
 router.get("/posts/:id", getUserPosts);
 router.put("/", editPost);
 router.post("/like/:userId/:postId", toggleLike);

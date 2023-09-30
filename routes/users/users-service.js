@@ -49,4 +49,40 @@ async function getUsers() {
     throw error;
   }
 }
-module.exports = { signUpUser, deleteUser, getUsers, updateUser, getUser };
+async function toggleFollow(userId, followId) {
+  try {
+    const user = await getUser(userId);
+    if (!user) {
+      throw createHttpError.NotFound("User not found.");
+    }
+    if (user.follows.includes(followId)) {
+      await User.updateOne({ _id: userId }, { $pull: { follows: followId } });
+      console.log("UnFollowed user");
+    } else {
+      await User.updateOne({ _id: userId }, { $push: { follows: followId } });
+      console.log("Followed user");
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getUsersByName(userName) {
+  try {
+    const users = await User.find({
+      userName: { $regex: userName, $options: "i" }, // 'i' for case-insensitive
+    });
+    return users;
+  } catch (error) {
+    throw error;
+  }
+}
+module.exports = {
+  signUpUser,
+  deleteUser,
+  getUsers,
+  updateUser,
+  getUser,
+  toggleFollow,
+  getUsersByName,
+};

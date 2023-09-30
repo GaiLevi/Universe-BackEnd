@@ -13,7 +13,8 @@ async function createPost(req, res) {
 
 async function getPosts(req, res) {
   try {
-    const posts = await postService.getPosts();
+    const userId = req.params.userId;
+    const posts = await postService.getPosts(userId);
     res.send(posts);
   } catch (error) {
     res.status(error.status).send(error);
@@ -33,6 +34,7 @@ async function deletePost(req, res) {
 async function enterPost(req, res) {
   try {
     const postId = req.params.id;
+    console.log(postId);
     const post = await postService.getPost(postId);
     res.send(post);
   } catch (error) {

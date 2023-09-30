@@ -1,5 +1,5 @@
 const { Post } = require("../../models/schemes");
-
+const userService = require("../users/users-service");
 async function createPost(post) {
   try {
     return await Post.create({
@@ -12,9 +12,12 @@ async function createPost(post) {
   }
 }
 
-async function getPosts() {
+async function getPosts(userId) {
   try {
-    return await Post.find({});
+    const user = await userService.getUser(userId);
+    const follows = [...user.follows, userId];
+    const posts = await Post.find({ "user.id": { $in: follows } });
+    return posts;
   } catch (error) {
     throw error;
   }
@@ -30,6 +33,7 @@ async function deletePost(postId) {
 
 async function getPost(postId) {
   try {
+    console.log(postId);
     const post = await Post.findById(postId);
     return post;
   } catch (error) {

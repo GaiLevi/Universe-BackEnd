@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema({
   email: String,
   password: String,
   profileImage: String,
+  follows: [String],
 });
 
 const Post = mongoose.model(`post`, postSchema);
