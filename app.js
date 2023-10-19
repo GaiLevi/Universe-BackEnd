@@ -7,6 +7,7 @@ var logger = require("morgan");
 var postsRouter = require("./routes/posts/posts-routes");
 var usersRouter = require("./routes/users/users-routes");
 var authRouter = require("./routes/auth/auth-routes");
+var notificationRouter = require("./routes/notifications/notification-routes");
 var app = express();
 
 // view engine setup
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/posts", postsRouter);
 app.use("/users", usersRouter);
 app.use("/auth", authRouter);
+app.use("/notification", notificationRouter);
 require("./models/database.js");
 
 // catch 404 and forward to error handler

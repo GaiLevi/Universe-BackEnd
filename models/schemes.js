@@ -31,6 +31,15 @@ const userSchema = new mongoose.Schema({
   password: String,
   profileImage: String,
   follows: [String],
+  notifications: [
+    {
+      recieverId: String,
+      action: String,
+      postId: String,
+      commentId: String,
+      provokerId: String,
+    },
+  ],
 });
 
 const Post = mongoose.model(`post`, postSchema);

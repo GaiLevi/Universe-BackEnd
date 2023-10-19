@@ -1,8 +1,9 @@
 const authService = require("./auth-service");
+const userService = require("../users/users-service");
 async function login(req, res) {
   try {
     const user = await authService.login(req.body);
-    const loginToken = authService.getLoginToken(user);
+    const loginToken = authService.getLoginToken(user._id);
     res.cookie("loginToken", loginToken);
     res.send(user);
   } catch (error) {
@@ -11,8 +12,11 @@ async function login(req, res) {
 }
 async function getLoggedUser(req, res) {
   try {
-    const user = authService.validateToken(req.cookies.loginToken);
-    res.send(user);
+    if (req.cookies.loginToken) {
+      const userId = authService.validateToken(req.cookies.loginToken);
+      const user = await userService.getUser(userId);
+      res.send(user);
+    }
   } catch (error) {
     res.status(error.status).send(error);
   }
