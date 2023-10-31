@@ -14,9 +14,13 @@ async function toggleNotification(notification) {
     });
     if (notIndex === -1) {
       reciever.notifications.push(notification);
+      reciever.unseenNotifications++;
       await userService.updateUser(reciever);
     } else {
       reciever.notifications.splice(notIndex, 1);
+      if (reciever.unseenNotifications > 0) {
+        reciever.unseenNotifications--;
+      }
       await userService.updateUser(reciever);
     }
   } catch (error) {

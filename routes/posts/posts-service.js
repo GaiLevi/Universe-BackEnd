@@ -86,7 +86,9 @@ async function addComment(comment) {
       timeStamp: new Date(),
     };
     post.comments.push(newComment);
-    return await editPost(post);
+    await editPost(post);
+    const addedComment = post.comments[post.comments.length - 1];
+    return addedComment;
   } catch (error) {
     throw error;
   }

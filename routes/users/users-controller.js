@@ -66,6 +66,16 @@ async function getUsersByName(req, res) {
   }
 }
 
+async function resetUnseenNot(req, res) {
+  try {
+    const { userId } = req.params;
+    await userService.resetUnseenNot(userId);
+    res.send("Unseen Notifications number have been reset.");
+  } catch (error) {
+    res.status(error.status).send(error);
+  }
+}
+
 module.exports = {
   signUpUser,
   getUser,
@@ -74,4 +84,5 @@ module.exports = {
   updateUser,
   toggleFollow,
   getUsersByName,
+  resetUnseenNot,
 };

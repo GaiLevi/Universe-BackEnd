@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
   password: String,
   profileImage: String,
   follows: [String],
+  unseenNotifications: {
+    type: Number,
+    default: 0,
+  },
   notifications: [
     {
       recieverId: String,

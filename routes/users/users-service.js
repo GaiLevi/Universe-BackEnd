@@ -77,6 +77,16 @@ async function getUsersByName(userName) {
     throw error;
   }
 }
+
+async function resetUnseenNot(userId) {
+  try {
+    const user = await getUser(userId);
+    user.unseenNotifications = 0;
+    await updateUser(user);
+  } catch (error) {
+    throw error;
+  }
+}
 module.exports = {
   signUpUser,
   deleteUser,
@@ -85,4 +95,5 @@ module.exports = {
   getUser,
   toggleFollow,
   getUsersByName,
+  resetUnseenNot,
 };
