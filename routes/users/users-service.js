@@ -1,5 +1,5 @@
 const createHttpError = require("http-errors");
-const { User } = require("../../models/schemes");
+const { User, Post } = require("../../models/schemes");
 
 async function getUserByEmail(email) {
   try {
@@ -31,6 +31,20 @@ async function deleteUser(userId) {
 async function updateUser(updatedUser) {
   try {
     const user = await User.updateOne({ _id: updatedUser._id }, updatedUser);
+    await Post.updateMany(
+      { "user.id": updatedUser._id },
+      { $set: { "user.profileImage": updatedUser.profileImage } }
+    );
+    const posts = await Post.find({ "comments.user.id": updatedUser._id });
+
+    for (const post of posts) {
+      for (const comment of post.comments) {
+        if (comment.user.id === updatedUser._id) {
+          comment.user.profileImage = updatedUser.profileImage;
+        }
+      }
+      await post.save();
+    }
   } catch (error) {
     throw error;
   }
@@ -87,6 +101,27 @@ async function resetUnseenNot(userId) {
     throw error;
   }
 }
+async function updateProfileImage(updatedUser) {
+  try {
+    const user = await User.updateOne({ _id: updatedUser._id }, updatedUser);
+    await Post.updateMany(
+      { "user.id": updatedUser._id },
+      { $set: { "user.profileImage": updatedUser.profileImage } }
+    );
+    const posts = await Post.find({ "comments.user.id": updatedUser._id });
+
+    for (const post of posts) {
+      for (const comment of post.comments) {
+        if (comment.user.id === updatedUser._id) {
+          comment.user.profileImage = updatedUser.profileImage;
+        }
+      }
+      await post.save();
+    }
+  } catch (error) {
+    throw error;
+  }
+}
 module.exports = {
   signUpUser,
   deleteUser,
@@ -96,4 +131,5 @@ module.exports = {
   toggleFollow,
   getUsersByName,
   resetUnseenNot,
+  updateProfileImage,
 };

@@ -75,6 +75,16 @@ async function resetUnseenNot(req, res) {
     res.status(error.status).send(error);
   }
 }
+async function updateProfileImage(req, res) {
+  console.log("here!!");
+
+  try {
+    await userService.updateProfileImage(req.body);
+    res.send("User's profile image updated");
+  } catch (error) {
+    res.status(error.status).send(error);
+  }
+}
 
 module.exports = {
   signUpUser,
@@ -85,4 +95,5 @@ module.exports = {
   toggleFollow,
   getUsersByName,
   resetUnseenNot,
+  updateProfileImage,
 };
