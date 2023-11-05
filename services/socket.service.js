@@ -19,8 +19,8 @@ async function setupSocketAPI(http) {
       const post = await postService.getPost(postId);
       const userId = post.user.id;
       const target = await getUserSocket(userId);
-      console.log(target);
-      if (target && target.userId !== userId) {
+      if (target && socket.userId !== userId) {
+        console.log("socket notification");
         target.emit("notification");
       }
     });
@@ -28,8 +28,7 @@ async function setupSocketAPI(http) {
       const comment = await postService.getComment(postId, commentId);
       const userId = comment.user.id;
       const target = await getUserSocket(userId);
-      if (target && target.userId !== userId) {
-        console.log("ike-comment-notification");
+      if (target && socket.userId !== userId) {
         target.emit("notification");
       }
     });

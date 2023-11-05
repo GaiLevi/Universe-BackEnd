@@ -154,7 +154,6 @@ async function getComment(postId, commentId) {
     if (!post) {
       throw new Error("Post not found");
     }
-
     // Find the comment within the comments array
     const comment = post.comments.find((c) => c._id.toString() === commentId);
 
