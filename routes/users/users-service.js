@@ -30,21 +30,7 @@ async function deleteUser(userId) {
 }
 async function updateUser(updatedUser) {
   try {
-    const user = await User.updateOne({ _id: updatedUser._id }, updatedUser);
-    await Post.updateMany(
-      { "user.id": updatedUser._id },
-      { $set: { "user.profileImage": updatedUser.profileImage } }
-    );
-    const posts = await Post.find({ "comments.user.id": updatedUser._id });
-
-    for (const post of posts) {
-      for (const comment of post.comments) {
-        if (comment.user.id === updatedUser._id) {
-          comment.user.profileImage = updatedUser.profileImage;
-        }
-      }
-      await post.save();
-    }
+    await User.updateOne({ _id: updatedUser._id }, updatedUser);
   } catch (error) {
     throw error;
   }

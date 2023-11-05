@@ -76,8 +76,6 @@ async function resetUnseenNot(req, res) {
   }
 }
 async function updateProfileImage(req, res) {
-  console.log("here!!");
-
   try {
     await userService.updateProfileImage(req.body);
     res.send("User's profile image updated");

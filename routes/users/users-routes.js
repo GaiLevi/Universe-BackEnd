@@ -18,7 +18,7 @@ router.put("/", updateUser);
 router.delete("/:id", deleteUser);
 router.post("/follow/:userId/:followId", toggleFollow);
 router.get("/names/:userName", getUsersByName);
-router.put("/:userId", resetUnseenNot);
+router.put("/resetUnseenNot/:userId", resetUnseenNot);
 router.put("/profileImage", updateProfileImage);
 
 module.exports = router;
