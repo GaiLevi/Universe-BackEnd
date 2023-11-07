@@ -10,6 +10,7 @@ var authRouter = require("./routes/auth/auth-routes");
 var notificationRouter = require("./routes/notifications/notification-routes");
 var app = express();
 const http = require("http").createServer(app);
+const https = require("https").createServer(app);
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
@@ -57,6 +58,10 @@ app.use(function (err, req, res, next) {
 });
 const port = process.env.PORT || 3030;
 http.listen(port, () => {
+  console.log("Server is running on port: " + port);
+});
+
+https.listen(post, () => {
   console.log("Server is running on port: " + port);
 });
 setupSocketAPI(http);
