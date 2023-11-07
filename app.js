@@ -19,7 +19,12 @@ const { setupSocketAPI } = require("./services/socket.service");
 // Use the CORS middleware
 const corsOptions = {
   // Make sure origin contains the url your frontend is running on
-  origin: ["http://localhost:3001", "http://localhost:3000"],
+  origin: [
+    "http://localhost:3001",
+    "http://localhost:3000",
+    "https://universe-frontend.onrender.com",
+    "*",
+  ],
   credentials: true,
 };
 app.use(cors(corsOptions));
