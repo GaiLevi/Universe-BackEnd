@@ -2,6 +2,7 @@ const authService = require("./auth-service");
 const userService = require("../users/users-service");
 async function login(req, res) {
   try {
+    res.setHeader("Access-Control-Allow-Origin", "*");
     const user = await authService.login(req.body);
     const loginToken = authService.getLoginToken(user._id);
     console.log(loginToken);
