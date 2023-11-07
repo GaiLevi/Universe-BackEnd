@@ -2,16 +2,10 @@ const authService = require("./auth-service");
 const userService = require("../users/users-service");
 async function login(req, res) {
   try {
-    // res.setHeader("Access-Control-Allow-Origin", "*");
     const user = await authService.login(req.body);
     const loginToken = authService.getLoginToken(user._id);
     console.log(loginToken);
-    res.cookie("loginToken", loginToken, {
-      httpOnly: true,
-      secure: true,
-      domain: "https://universe-frontend.onrender.com",
-      path: "/auth",
-    });
+    res.cookie("loginToken", loginToken);
     res.send(user);
   } catch (error) {
     res.status(error.status).send(error);
