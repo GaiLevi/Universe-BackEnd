@@ -10,7 +10,7 @@ async function login(req, res) {
       httpOnly: true,
       secure: true,
       domain: "https://universe-frontend.onrender.com",
-      path: "/",
+      path: "/auth",
     });
     res.send(user);
   } catch (error) {
