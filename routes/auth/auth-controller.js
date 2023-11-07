@@ -5,7 +5,7 @@ async function login(req, res) {
     const user = await authService.login(req.body);
     const loginToken = authService.getLoginToken(user._id);
     console.log(loginToken);
-    res.cookie("loginToken", loginToken);
+    res.cookie("loginToken", loginToken, { sameSite: "None", secure: true });
     res.send(user);
   } catch (error) {
     res.status(error.status).send(error);
