@@ -61,7 +61,7 @@ http.listen(port, () => {
   console.log("Server is running on port: " + port);
 });
 
-https.listen(post, () => {
+https.listen(port, () => {
   console.log("Server is running on port: " + port);
 });
 setupSocketAPI(http);
