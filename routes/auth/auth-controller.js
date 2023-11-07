@@ -5,6 +5,8 @@ async function login(req, res) {
     const user = await authService.login(req.body);
     const loginToken = authService.getLoginToken(user._id);
     console.log(loginToken);
+    const cookie = `loginToken=${loginToken}; samesite=none; secure`;
+    res.setHeader("set-cookie", [cookie]);
     res.cookie("loginToken", loginToken);
     res.send(user);
   } catch (error) {
