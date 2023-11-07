@@ -8,6 +8,8 @@ const {
   signUpUser,
   toggleFollow,
   getUsersByName,
+  resetUnseenNot,
+  updateProfileImage,
 } = require("./users-controller");
 router.post("/", signUpUser);
 router.get("/:id", getUser);
@@ -16,5 +18,7 @@ router.put("/", updateUser);
 router.delete("/:id", deleteUser);
 router.post("/follow/:userId/:followId", toggleFollow);
 router.get("/names/:userName", getUsersByName);
+router.put("/resetUnseenNot/:userId", resetUnseenNot);
+router.put("/profileImage", updateProfileImage);
 
 module.exports = router;

@@ -86,7 +86,9 @@ async function addComment(comment) {
       timeStamp: new Date(),
     };
     post.comments.push(newComment);
-    return await editPost(post);
+    await editPost(post);
+    const addedComment = post.comments[post.comments.length - 1];
+    return addedComment;
   } catch (error) {
     throw error;
   }
@@ -145,6 +147,25 @@ async function toggleCommentLike(userId, postId, commentId) {
   }
 }
 
+async function getComment(postId, commentId) {
+  try {
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      throw new Error("Post not found");
+    }
+    // Find the comment within the comments array
+    const comment = post.comments.find((c) => c._id.toString() === commentId);
+
+    if (!comment) {
+      throw new Error("Comment not found");
+    }
+    return comment;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   createPost,
   getPosts,
@@ -156,4 +177,5 @@ module.exports = {
   addComment,
   deleteComment,
   toggleCommentLike,
+  getComment,
 };
