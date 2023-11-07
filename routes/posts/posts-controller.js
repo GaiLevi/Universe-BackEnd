@@ -14,6 +14,7 @@ async function createPost(req, res) {
 async function getPosts(req, res) {
   try {
     const userId = req.params.userId;
+    console.log(userId);
     const posts = await postService.getPosts(userId);
     res.send(posts);
   } catch (error) {
