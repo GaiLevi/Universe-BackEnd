@@ -2,6 +2,7 @@ const authService = require("./auth-service");
 const userService = require("../users/users-service");
 async function login(req, res) {
   try {
+    console.log("login");
     const user = await authService.login(req.body);
     const loginToken = authService.getLoginToken(user._id);
     res.cookie("loginToken", loginToken);
