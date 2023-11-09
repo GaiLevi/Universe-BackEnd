@@ -19,6 +19,8 @@ async function getLoggedUser(req, res) {
       const userId = authService.validateToken(req.cookies.loginToken);
       const user = await userService.getUser(userId);
       res.send(user);
+    } else {
+      res.send(null);
     }
   } catch (error) {
     res.status(error.status).send(error);
