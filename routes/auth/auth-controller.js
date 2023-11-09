@@ -28,7 +28,9 @@ async function getLoggedUser(req, res) {
 }
 async function logout(req, res) {
   try {
-    res.clearCookie("loginToken");
+    // res.clearCookie("loginToken");
+    res.clearCookie("loginToken", { sameSite: "None", secure: true });
+
     res.send("Cookie deleted");
   } catch (error) {
     res.status(error.status).send(error);
