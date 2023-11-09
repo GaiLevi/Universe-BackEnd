@@ -28,7 +28,7 @@ async function getLoggedUser(req, res) {
 }
 async function logout(req, res) {
   try {
-    const expiredCookie = `loginToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; samesite=none; secure`;
+    const expiredCookie = `loginToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; samesite=none; secure; path=/`;
     res.setHeader("set-cookie", [expiredCookie]);
     res.clearCookie("loginToken");
     res.send("Cookie deleted");
