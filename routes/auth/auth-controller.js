@@ -5,7 +5,7 @@ async function login(req, res) {
     const user = await authService.login(req.body);
     const loginToken = authService.getLoginToken(user._id);
     console.log(loginToken);
-    const cookie = `loginToken=${loginToken}; samesite=none; secure;httponly`;
+    const cookie = `loginToken=${loginToken}; samesite=none; secure`;
     res.setHeader("set-cookie", [cookie]);
     res.cookie("loginToken", loginToken);
     res.send(user);
@@ -28,6 +28,8 @@ async function getLoggedUser(req, res) {
 }
 async function logout(req, res) {
   try {
+    const expiredCookie = `loginToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; samesite=none; secure`;
+    res.setHeader("set-cookie", [expiredCookie]);
     res.clearCookie("loginToken");
     res.send("Cookie deleted");
   } catch (error) {
